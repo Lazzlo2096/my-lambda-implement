@@ -34,8 +34,7 @@ replaceInWith t1 t2@(Apply t2t1 t2t2)  t3
     | t1 == t2t1 = Apply t3 t2t2
     | t1 == t2t2 = Apply t2t1 t3
     | otherwise = error "ooo"
-
-replaceInWith t1 t2@(Term nameT2)      t3 = if t1 == t2 then t3 else error "lal"
+replaceInWith t1 t2@(Term nameT2) t3 = if t1 == t2 then t3 else error "lal"
 
 redApply_until_end a@(Apply _ _) = redApply_until_end (redApply a)
 redApply_until_end a = a
@@ -48,3 +47,31 @@ redApply_until_end a = a
 
 
 main = putStrLn $ show $ redApply_until_end lol
+
+
+------------------------------------------------------------------------
+
+{--
+
+idComb2' = "λ x . x"
+
+parseMyLang 
+
+alpabet = ['a'..'z']
+space = [' ', '\t']
+newlineChars = ['\n']
+specialChars = ['λ','.']
+
+
+LambdaThing
+(Charr 'λ'), (Many space), (OneOrMore alpabet) , (Many space), (Charr '.'), (OR LambdaThing ApplyThing)
+
+ApplyThing
+(OneOrMore alpabet), (Many space), (OneOrMore alpabet)
+
+-- это типо лексика, но а синтаксис?
+
+
+idComb2 = Lambda (Term "x") (Term "x")
+
+--}

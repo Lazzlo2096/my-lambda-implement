@@ -1,0 +1,6 @@
+
+idComb  = λ x . x
+selfApl = λ x . x x
+
+putStrLn (idComb selfApl)
+putStrLn (selfApl idComb)
