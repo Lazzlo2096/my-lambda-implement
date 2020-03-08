@@ -20,7 +20,8 @@ selfApl = Lambda (Term "x") (Apply (Term "x") (Term "x"))
 
 apl = Lambda (Term "y") (Lambda (Term "x") (Apply (Term "y") (Term "x")))
 
-lol = Apply  selfApl idComb
+lol = Apply idComb selfApl 
+lol2 = Apply (Apply apl idComb) selfApl 
 
 -- MyThings -> 
 redApply (Apply t1 t2) = aplToLambda t1 t2
@@ -36,6 +37,8 @@ replaceInWith t1 t2@(Apply t2t1 t2t2)  t3
 
 replaceInWith t1 t2@(Term nameT2)      t3 = if t1 == t2 then t3 else error "lal"
 
+redApply_until_end a@(Apply _ _) = redApply_until_end (redApply a)
+redApply_until_end a = a
 
 -- Y = "λ g . "
 -- I = "λ x . "
@@ -44,4 +47,4 @@ replaceInWith t1 t2@(Term nameT2)      t3 = if t1 == t2 then t3 else error "lal"
 -- LOL1 = "λ x . λ y . x y"
 
 
-main = putStrLn $ show $ redApply lol
+main = putStrLn $ show $ redApply_until_end lol
